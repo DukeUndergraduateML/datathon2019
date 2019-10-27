@@ -47,7 +47,7 @@ You will work in teams of up to four members. You must submit your submission (a
 1. Please submit early and often. 
 2. Please assign one person in your group to be in charge of your submissions. Please make sure to keep track of your submission number in CMT. 
 3. You must submit a report consisting of an abstract, data description, methodology, analysis section, and discussion. 
-4. Your report may not be longer than 4 pages in length. You may have an optional appendix, however, this may not be read by the reviewers. 
+4. Your report may not be longer than 4 pages in length. You may have an optional appendix (maximum 2 pages), however, this may not be read by the reviewers. 
 5. You must submit your code (in a .zip file) and it must be runnable in order to be considered for a submission. 
 
 # Rubric 
