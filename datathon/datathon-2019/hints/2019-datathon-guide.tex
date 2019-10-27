@@ -1,0 +1,78 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=2.5cm, left=2.25cm, right=2.25cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{bbm}
+\usepackage{float}
+
+
+\begin{document}
+
+\begin{center}
+\section*{Datathon 2019: Tips and Suggestions for Participants}
+\end{center}
+
+\hrule
+
+\vspace{6mm}
+
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+
+\item \textbf{Missing Data}
+
+\begin{itemize}
+  \item Note that some of the topic IDs listed in training.csv are not actually contained in interest\_topics.csv
+  \item It is up to you to decide what to do with this missing information
+\end{itemize}
+
+\item \textbf{Imbalanced data}
+
+\begin{itemize}
+  \item Choose appropriate evaluation metrics! (F1 score, balanced accuracy, precision, recall, etc.)
+  \item Undersampling, oversampling, etc.
+  \item Imbalanced-Learn package in Python
+  \item Use class weights inside your model, to weigh the smaller class more heavily
+\end{itemize}
+
+\item \textbf{Sparse data}
+
+\begin{itemize}
+  \item Consider dimensionality reduction methods
+  \item Also, consider combining topics (for example, combine all topics within the `Arts and Entertainment' category into just one topic)
+
+\end{itemize}
+
+
+\item \textbf{Dealing with `big data'}
+
+
+\begin{itemize}
+  \item In R: consider using readr::read\_csv() instead of read.csv()
+  \item Python: DictVectorizer may come in handy
+  \item Use vectorization (rather than for loops) when possible!
+\end{itemize}
+
+\item \textbf{Other tips}
+
+\begin{itemize}
+  \item Start working on your presentations early! Explaining your results is often just as important as producing them, and it may take longer than you expect
+  \item Using visualizations to explain your work can be very helpful
+
+\end{itemize}
+
+
+
+
+\end{enumerate}
+
+\end{document}
