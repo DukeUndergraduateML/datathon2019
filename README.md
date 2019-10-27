@@ -37,7 +37,17 @@ For various reasons, marketers will have to understand the profile of the shoppe
 
 # The Final Product
 
-You will work in teams of up to four members. You must submit your submission to 
+You will work in teams of up to four members. You must submit your submission (and only one submission per group) to https://cmt3.research.microsoft.com/User/Login?ReturnUrl=%2FDATATHON2019 by the deadline. Multiple submissions will be disqualified. 
+
+1. Please submit early and often. 
+2. Please assign one person in your group to be in charge of your submissions. Please make sure to keep track of your submission number in CMT. 
+3. You must submit a report consisting of an abstract, data description, methodology, analysis section, and discussion. 
+4. Your report may not be longer than 4 pages in length. You may have an optional appendix, however, this may not be read by the reviewers. 
+5. You must submit your code (in a .zip file) and it must be runnable in order to be considered for a submission. 
+
+# Rubric 
+
+Could we please put the grading rubric down. 
 
 
 
