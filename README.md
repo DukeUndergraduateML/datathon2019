@@ -35,6 +35,11 @@ For various reasons, marketers will have to understand the profile of the shoppe
 4. What is your take on the profile of the converters?  
 5. What other insights can you gain from the data and the model you have built? 
 
+## Data Description 
+
+(We should move the data description here for easier use of the particpants). 
+
+
 # The Final Product
 
 You will work in teams of up to four members. You must submit your submission (and only one submission per group) to https://cmt3.research.microsoft.com/User/Login?ReturnUrl=%2FDATATHON2019 by the deadline. Multiple submissions will be disqualified. 
