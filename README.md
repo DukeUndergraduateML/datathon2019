@@ -1,6 +1,6 @@
 # Datathon 2019, Sponsored by the Duke Undergraduate Machine Learning Program 
 
-# Valassis (The main sponsor of Datathon 2019)
+# Valassis
 
 Valassis is the leader in marketing technology and consumer engagement.
 They work with over 60,000 companies and brands in a wide array of industries
