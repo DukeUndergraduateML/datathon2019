@@ -87,7 +87,9 @@ You will work in teams of up to four members. You must submit your submission (a
 
 Could we please put the grading rubric down. 
 
+# Tips / Suggestions
 
+Please see [this document](https://github.com/DukeUndergraduateML/datathon/blob/master/datathon/datathon-2019/hints/2019-datathon-guide.pdf) for a few tips/suggestions!
 
 
 
