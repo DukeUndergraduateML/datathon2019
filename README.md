@@ -37,7 +37,40 @@ For various reasons, marketers will have to understand the profile of the shoppe
 
 ## Data Description 
 
-(We should move the data description here for easier use of the particpants). 
+You should see three main data files:
+
+1. **training.csv**: Contains the training data, which is needed for training the model
+   - Total number of data points: 100,917
+   - Positive data points: 1,500
+   - Negative data points: 99,417
+   
+2. **validation.csv**: Contains the samples for validating the model
+   - Total number of data points: 84,141
+   - Positive data points: 641
+   - Negative data points: 83,500
+   
+3. **interest_topics.csv**: Contains the topic labels and topic descriptions
+   - 1,411 total interest topics in the file
+   
+### *Column descriptions*
+
+##### Interest Topics Dataset
+- Each row is one of the interest topics
+- *topic_id* (integer): Numerical identifier of the topic
+- *topic_name* (string): Interest topic name
+
+
+##### Training and Validation Datasets
+- Each row represents a shopper's long term and short-term interests, across the 1,411 total categories
+- *inAudience* (boolean): Whether or not the shopper has converted in the past
+   - TRUE: shopper has converted
+   - FALSE: shopper has not converted
+
+- *ltiFeatures* (dictionary, key: string, value: double): Long term interests
+   - The dictionary's keys are the interest topics. The value represents the proportional interest the user has in that topic.
+   - For example, if the *ltiFeatures* of one of the users is {'34': 0.7, '41': 0.3}, that means that the user has 70% interest in Topic 34, which is */Arts & Entertainment/Movies*, and 30% interest in Topic 41, which is */Games/Computer & Video Games*.
+- *stiFeatures* (dictionary, key: string, value: double): Short term interests
+   - Format is the same as *ltiFeatures*, except this now refers to short-term interests rather than long-term interests
 
 
 # The Final Product
