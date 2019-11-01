@@ -140,6 +140,7 @@ validation.head()
 ```r
 library(readr)
 
+# readr::read_csv() is much faster than read.csv()
 training = read_csv("training_tallskinny.csv")
 validation = read_csv("validation_tallskinny.csv")
 interest_topics = read_csv("interest_topics.csv")
