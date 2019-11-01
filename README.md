@@ -109,6 +109,7 @@ You should see three main data files:
 # Code snippets for getting started
 
 ### Python
+(This code uses dataset version 1, which is recommended for Python users, but feel free to use whichever one you prefer).
 
 ```python
 def load(file):
@@ -133,7 +134,8 @@ training.head()
 validation.head()
 ```
 
-### R
+### R 
+(This code uses dataset version 2, which is recommended for R users, but feel free to use whichever one you prefer).
 
 ```r
 library(readr)
