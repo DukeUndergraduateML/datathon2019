@@ -7,7 +7,7 @@ Valassis examines content across 80 billion web pages each day and derives meani
 
 # 2019 Challenge Dataset
 
-dukeml.org/dataset
+**https://dukeml.org/dataset**
 
 ## Background 
 
