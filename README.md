@@ -1,6 +1,4 @@
-# Datathon 2019, Sponsored by the Duke Undergraduate Machine Learning Program 
-
-# Valassis
+# 2019 Duke Datathon, hosted by Duke Undergraduate Machine Learning 
 
 Valassis is the leader in marketing technology and consumer engagement. They work with over 60,000 companies and brands in a wide array of industries, partnering to anticipate consumer intent, inspire action, and create demand, while saving consumers money. They own and use predictive intelligence to anticipate purchase intent, deliver value, optimize campaigns, and drive results by inspiring consumers to act.  Every day, Valassis converts billions of signals into meaningful engagement across all channels to drive exponential growth.  
 
@@ -16,11 +14,11 @@ In digital advertising, a “conversion” refers to the event when the shopper 
 In order to wisely spend the limited marketing dollars, we need to identify the shoppers who are more likely to respond to our ad and convert.  While the number of devices to target is nearly one billion, the number of conversion events range from just a few hundreds to few thousands during the period of the ad campaign.  In other words, these conversion events are extremely rare.   
  
 
-## The Challenge 
+## Example Challenge 
 
-**The primary objective is to predict the shoppers who are likely to convert with very little false alarm.** An added impediment is that the information we know about the shopper is incomplete which means the data is sparse.
+For example, one objective might be to predict the shoppers who are likely to convert with very little false alarm. An added impediment is that the information we know about the shopper is incomplete which means the data is sparse.
 
-## The Ask
+## Example Ask
 
 The dataset is already divided into two groups (refer to Table 1) for your convenience, training and validation.
 
@@ -148,13 +146,12 @@ interest_topics = read_csv("interest_topics.csv")
 
 # The Final Product
 
-You will work in teams of up to four members. You must submit your submission (and only one submission per group) to https://cmt3.research.microsoft.com/User/Login?ReturnUrl=%2FDATATHON2019 by the deadline. Multiple submissions will be disqualified. 
+You will work in teams of up to four members. You must submit your submission (and only one submission per group) to https://cmt3.research.microsoft.com/DATATHON2019 by the deadline. Multiple submissions will be disqualified. 
 
-1. Please submit early and often. 
-2. Please assign one person in your group to be in charge of your submissions. Please make sure to keep track of your submission number in CMT. 
-3. You must submit a report consisting of an abstract, data description, methodology, analysis section, and discussion. 
-4. Your report may not be longer than 4 pages in length. You may have an optional appendix (maximum 2 pages), however, this may not be read by the reviewers. 
-5. You must submit your code (in a .zip file) and it must be runnable in order to be considered for a submission. 
+1. Please assign one person in your group to be in charge of your submissions. Please make sure to keep track of your submission number in CMT. 
+2. You must submit a report consisting of an introduction, data engineering section, analysis, findings, and conclusion. 
+3. Your report may not be longer than 4 pages in length. You may have an optional appendix (maximum 2 pages), however, reviewers are not required to read this section. 
+4. You must submit your code (in a .zip file) and it must be runnable in order to be considered for a submission. 
 
 # Rubric 
 
