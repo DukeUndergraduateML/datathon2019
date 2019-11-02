@@ -148,7 +148,7 @@ interest_topics = read_csv("interest_topics.csv")
 
 # The Final Product
 
-You will work in teams of up to four members. You must submit your submission (and only one submission per group) to https://cmt3.research.microsoft.com/DATATHON2019 by the deadline. Multiple submissions will be disqualified. 
+You will work in teams of up to four members. You must submit your submission (and only one submission per group) to https://dukeml.org/submit by 9pm on Saturday, November 2nd. Multiple submissions will be disqualified. 
 
 1. Please assign one person in your group to be in charge of your submissions. Please make sure to keep track of your submission number in CMT. 
 2. You must submit a report consisting of an introduction, data engineering section, analysis, findings, and conclusion. 
