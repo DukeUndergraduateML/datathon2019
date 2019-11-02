@@ -7,6 +7,8 @@ Valassis examines content across 80 billion web pages each day and derives meani
 
 # 2019 Challenge Dataset
 
+dukeml.org/dataset
+
 ## Background 
 
 In digital advertising, a “conversion” refers to the event when the shopper clicks on an ad and performs a valuable action such as signup, registration, or make a purchase.  Since a "conversion" is a measurable event, it represents a reasonable proxy for the number of customers acquired during the ad campaign.  Increasingly, brands and agencies are looking to put a value on the Return on Advertising Spend (ROAS), which requires marketers such as Valassis to optimize the ad spend such that customer acquisition is maximized.
