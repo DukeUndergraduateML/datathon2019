@@ -1,0 +1,247 @@
+---
+title: "Datathon Analysis"
+author: ""
+date: "11/2/2019"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(plotly)
+data <- read.csv('training_tallskinny.csv')
+interest <- read.csv('interest_topics.csv')
+# processed_lti <- read.csv("Processed Users.csv")
+# correlation <- read.csv("Correlation.csv")
+
+nrow(data)
+
+
+data %>%
+       filter(!is.na(ltiFeatures))
+```
+
+```{r}
+var.imp <- read.csv("VI.csv")
+variable_importance <- var.imp %>%
+  mutate(feature = as.character(feature))
+v.list <- stringr::str_split(variable_importance$feature, " ")
+
+int.top <- c()
+for (i in 1:length(v.list)) {
+  v.list <- stringr::str_split(variable_importance$feature, " ")
+  
+  one <- v.list[[i]][length(v.list[[i]])]
+  
+  int.top <- c(int.top, one)
+}
+
+variable_importance$int.top <- int.top
+
+variable_importance$feature <- str_remove_all(variable_importance$feature, " STI")
+variable_importance$feature <- str_remove_all(variable_importance$feature, " LTI")
+
+diff.var.imp <- variable_importance %>%
+  group_by(feature) %>%
+  spread(key = "int.top", value = "feature_importance") %>%
+  mutate(diff = (STI - LTI))
+
+ggplot(diff.var.imp, aes(x= reorder(feature, -LTI), y = LTI)) + 
+  geom_bar(fill = "light blue", stat="identity", position='dodge') + 
+  theme_minimal() + 
+  ggpubr::rotate_x_text(angle = 50)
+
+ggplot(diff.var.imp, aes(x= reorder(feature, -STI), y = STI)) + 
+  geom_bar(fill = "light blue", stat="identity", position='dodge') + 
+  theme_minimal() + 
+  ggpubr::rotate_x_text(angle = 50)
+
+ggplot(diff.var.imp, aes(x= reorder(feature, -diff), y = diff)) + 
+  geom_bar(fill = "light blue", stat="identity", position='dodge') + 
+  labs(title = "Difference between STI and LTI by Feature",
+       x = "Features", 
+       y = "Difference") + 
+  theme_minimal() + 
+  ggpubr::rotate_x_text(angle = 50)
+```
+
+```{r}
+
+vec <- as.character(interest$topic_name)
+
+split <- strsplit(vec,  "/")
+topicgroup <- c()
+for (i in 1:length(split)) {
+  one <- split[[i]][2]
+  topicgroup <- c(topicgroup, one)
+}
+
+interest$topicgroup <- topicgroup
+
+
+data <- left_join(data, interest, by = "topic_id")
+head(data)
+```
+
+```{r}
+# user_true <- data %>%
+#   filter(inAudience == "True")
+# user_false <- data %>%
+#   filter(inAudience == "False")
+```
+
+```{r}
+# set.seed(123)
+# index <- sample(1:nrow(user_false), nrow(user_true))
+# 
+# sampled_user_false <- user_false[index, ]
+
+#sampled_data <- rbind(user_true, user_false)
+topicdist<- data %>%
+  group_by(topicgroup, inAudience)%>%
+  tally()
+
+perc.convert <- topicdist %>%
+  group_by(inAudience) %>%
+  mutate(perc = n / sum(n)) 
+
+diff.by.topic <- perc.convert %>%
+  select(-n) %>%
+  group_by(topicgroup) %>%
+  spread(key = "inAudience", value = "perc") %>%
+  mutate(diff = abs((True - False) ))
+
+ggplot(na.omit(perc.convert), aes(x=reorder(topicgroup, -perc), y = perc, fill=inAudience)) +
+  geom_bar(stat="identity", position='dodge') +
+  labs(title = "Conversion Percentage within each Interest Group",
+       x = "Topic", 
+       y = "Percentage", 
+       fill = "Conversion") + 
+  theme_classic() + 
+  ggpubr::rotate_x_text(angle = 55) 
+
+
+
+ggplot(na.omit(diff.by.topic), aes(x=reorder(topicgroup, -diff), y = diff)) +
+  geom_bar(fill = "light blue", stat="identity", position='dodge') +
+  labs(title = "Difference in Conversion Percentage within each Interest Group",
+       x = "Topic", 
+       y = "Difference") + 
+  theme_classic() + 
+  ggpubr::rotate_x_text(angle = 50)
+
+
+
+```
+autos, arts, news, health, shopping, reference, ppl and society, online communities
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+d <- tibble(hits = 1, runs = 2, o_hits = 5, o_runs = 9)
+d2 <- d %>% gather(key = "col_name", value = "value", everything())
+d3 <- d2 %>% separate(col_name, into = c("team", "metric"), sep = "_", fill = "left")
+d3$team <- ifelse(is.na(d3$team), "a", "b")
+d4 <- d3 %>% group_by(metric) %>% spread(key = "team", value = "value")
+d5 <- d4 %>% mutate(diff = a - b)
+
+
+d3
+d4
+d5
+
+
+
+```
+
+## Histograms grouped by Topic 
+
+```{r}
+topicdist<- full_data %>%
+  group_by(topicgroup, inAudience)%>%
+  tally()
+
+ggplot(na.omit(topicdist), aes(x=reorder(topicgroup, -n), y=n)) +
+  geom_bar(stat="identity", position='dodge') +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) #+ 
+coord_flip()
+
+
+
+ggplot(na.omit(topicdist), aes(x=reorder(topicgroup, -n), y=n)) +
+  geom_bar(stat="identity") +
+  facet_wrap(~inAudience, scales = "free_y") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) #+ 
+coord_flip() 
+
+
+topicdist.true <- user_true %>%
+  group_by(topicgroup) %>%
+  tally()
+
+
+
+ggplot(na.omit(topicdist.true), aes(x=reorder(topicgroup, -n), y=n)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+df3 <- transform(topicdist, id=match(topicgroup, unique(topicgroup)))
+
+ggplot(na.omit(df))
+
+```
+
+## Quartile
+
+```{r}
+flipped_processed_lti <- gather(processed_lti, "topicgroup", "lti", 2:26) %>%
+  filter(lti > 0) %>%
+  select(-X) %>%
+  mutate(Convert = case_when(
+    Convert == 0 ~ "False",
+    Convert == 1 ~ "True"
+  ))
+
+flipped_processed_lti <- flipped_processed_lti %>%
+  group_by(topicgroup) %>%
+  mutate(quartile = ntile(lti, 4))
+
+summary(flipped_processed_lti
+)
+write_csv(flipped_processed_lti, "processed_lti.csv")
+auto <- flipped_processed_lti %>%
+  filter(topicgroup == "Autos...Vehicles")
+
+
+ggplot(flipped_processed_lti, aes(x = lti,y =..density.., fill = as.factor(quartile))) +
+  geom_histogram(binwidth = .08, color = "black", size = 0.2, position = "dodge") +
+  facet_grid(~Convert) + 
+  theme_minimal()
+```
+
+## Heat Map 
+
+```{r}
+head(correlation)
+cor.lti <- cor(correlation)
+library(reshape2)
+melted.cor.lti <- melt(cor.lti)
+
+scale(mtcars)
+scale(correlation.samp)
+library(d3heatmap)
+d3heatmap(scale(correlation.samp))
+
+ggplot(data = melted.cor.lti %>% filter(Var1 <= 100, Var2 <= 100), aes(x=Var1, y=Var2, fill=value)) +
+  geom_tile(colour = "white") + 
+  scale_fill_gradient2(high = "#3690c0", mid = "white", low = "#3690c0",
+                       midpoint = 0, limit = c(-1,1), space = "Lab") + 
+  theme_minimal()
+```
+
+```{r}
+words <- c("Arts...Entertainment", "Autos...Vehicle")
+
+str_replace(string = words, pattern = "\\...", replacement = " & ")
+
+```
+

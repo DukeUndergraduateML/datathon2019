@@ -1,0 +1,161 @@
+---
+title: "Datathon Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(stringr)
+library(here)
+library(tidyverse)
+library(d3heatmap)
+library(dplyr)
+library(sjlabelled)
+library(ggbeeswarm)
+library(reshape2)
+library(maps)
+library(zipcode)
+library(sf)
+library(albersusa)
+```
+
+```{r }
+userdata<-read.csv(file="valassis_tallskinny_dataset/validation_tallskinny.csv")
+#userdata
+
+topicdata<-read.csv(file="valassis_tallskinny_dataset/interest_topics.csv")
+#topicdata
+
+traindata<-read.csv(file="valassis_tallskinny_dataset/training_tallskinny.csv")
+
+userdata<-rbind(userdata,traindata)
+groupbyinterest<- function(topic_name)
+vec <- as.character(topicdata$topic_name)
+
+split <- strsplit(vec,  "/")
+topic.test <- c()
+for (i in 1:length(split)) {
+  one <- split[[i]][2]
+  topic.test <- c(topic.test, one)
+}
+
+topicdata$topicgroup <-topic.test
+
+userdata<-left_join(userdata,topicdata)
+naniar::miss_var_summary(userdata)
+
+```
+
+## Cleaning and Exploring
+```{r }
+#N of people per interest
+ltiinterest<-userdata %>%
+  group_by(ltiFeatures)%>%
+  tally()%>%
+  arrange(desc(n))
+
+ltiinterest
+
+has_interest<- function(ltiFeatures, stiFeatures){
+  if (is.na(ltiFeatures)){
+    return (1)}
+  
+  if(is.na(stiFeatures)){
+    return (2)
+  }
+  else
+    return (3)
+}
+
+#Percentage of lti vs sti vs both converted
+cnvr_by_interest<- userdata%>%
+  mutate(hasinterest = has_interest(ltiFeatures,stiFeatures))%>%
+  arrange(desc(hasinterest))
+
+cnvr_by_interest[811,]
+
+
+```
+
+## Conversion
+```{r}
+topicdist<- userdata%>%
+  group_by(topicgroup,inAudience)%>%
+  tally()%>%
+  mutate(freq = n / sum(n), 
+          pct=freq*100)
+
+topicdist
+
+p<-ggplot(na.omit(topicdist), mapping=aes(x=reorder(topicgroup,-n), y=n,fill=inAudience))
+p+geom_bar(stat="identity")+ theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p<-ggplot(na.omit(topicdist), mapping=aes(x=reorder(topicgroup,-n), y=n))
+p+geom_bar(stat="identity")+ theme(axis.text.x = element_text(angle = 90, hjust = 1))+facet_wrap(~inAudience, scales="free_y")
+
+p<-ggplot(na.omit(topicdist), mapping=aes(x=reorder(topicgroup,-pct), y=pct))
+p+geom_bar(stat="identity")+ theme(axis.text.x = element_text(angle = 90, hjust = 1))+facet_wrap(~inAudience, scales="free_y")
+
+
+```
+## Individual People - LTI
+```{r, }
+processed_ltr<-read.csv("Processed Users.csv")
+processed_ltr
+processed_ltr<-gather(processed_ltr, "topicgroup", "ltr", 2:26)
+tail(processed_ltr)
+
+ae<-processed_ltr%>%
+  filter("Arts...Entertainment"%in%topicgroup, ltr>0)
+
+ae
+
+featuredata<- processed_ltr%>%
+  filter(ltr>0)%>%
+  group_by(topicgroup,ltr)
+
+featuredata
+
+p<-ggplot(na.omit(processed_ltr), mapping=aes(x=ltr, fill=factor(Convert)))
+p+geom_density(binwidth = 0.001)+facet_wrap(~topicgroup, scales="free_x")
+
+#+facet_wrap(~topicgroup, scales="free_x")
+#[seq(1, nrow(ae),1000),]
+```
+
+
+```{r, fig.height=8}
+converted<-processed_ltr%>%
+  filter(Convert==1)
+converted
+
+notconverted<-processed_ltr%>%
+  filter(Convert==0)
+notconverted
+
+samplecon<-rbind(converted,sample_n(notconverted,52125))
+samplecon
+
+
+samplecon$topicgroup <-str_replace(string = samplecon$topicgroup, pattern = "\\...", replacement = " & ")
+
+p<-ggplot(samplecon, mapping = aes(x=topicgroup,y=ltr, color=as.factor(Convert)))
+p+geom_quasirandom(alpha=0.3)+coord_flip()+labs(title= "Conversion Based On Percent Interest in Each Topic of Interest", x="Percent Interest in Topic", y="Topics of Interest", color = "Convert")
+```
+
+## Heatmap
+```{r}
+correlation<-read.csv("correlation.csv")
+
+#names(correlation) <- c(seq(1,length(correlation)))
+cor.lti <- round(cor(correlation), 5)
+
+melted.cor.lti <- melt(cor.lti)
+write.csv(melted.cor.lti, file = "meltedcorlti.csv")
+
+ggplot(data = melted.cor.lti, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile(colour = "white") + 
+scale_fill_gradient2(high = "#cc4c02", mid = "white", low = "#cc4c02",
+   midpoint = 0, limit = c(-1,1), space = "Lab")
+```
+
